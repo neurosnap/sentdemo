@@ -1,0 +1,28 @@
+{
+  "name": "sentdemo",
+  "version": "0.0.1",
+  "description": "Golang web application to demo sentence tokenizer",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neurosnap/sentdemo.git"
+  },
+  "keywords": [
+    "sentence",
+    "tokenizer"
+  ],
+  "author": "Eric Bower",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/neurosnap/sentdemo/issues"
+  },
+  "homepage": "https://github.com/neurosnap/sentdemo#readme",
+  "dependencies": {
+    "babelify": "^6.4.0",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  }
+}

@@ -1,2 +1,4 @@
 sentdemo
 *.swp
+public/js
+node_modules
