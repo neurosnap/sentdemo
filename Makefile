@@ -1,6 +1,6 @@
 
 browserify:
-	browserify -t babelify index.js -o ./public/js/index.js
+	browserify -t babelify index.js -o ./public/index.js
 
 build:
 	go build

@@ -52,5 +52,8 @@ func main() {
 		sentences(w, r, tokenizer)
 	})
 
+	fs := http.FileServer(http.Dir("public"))
+	http.Handle("/public/", http.StripPrefix("/public/", fs))
+
 	http.ListenAndServe(":3000", nil)
 }
