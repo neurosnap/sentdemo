@@ -131,8 +131,7 @@ var SentDemo = (function (_React$Component) {
 
     this.textInput = function (e) {
       post('/sentences/', 'text=' + e.target.value).then(function (data) {
-        var sentences = data.sentences;
-        _this.setState({ sentences: sentences });
+        _this.setState({ sentences: data.sentences });
       })['catch'](function (err) {
         console.log(err);
       });
@@ -176,7 +175,7 @@ var Sentence = (function (_React$Component2) {
     value: function render() {
       return _react2['default'].createElement(
         'div',
-        { style: { borderBottom: '1px solid black' } },
+        { className: 'sentence' },
         this.props.text
       );
     }

@@ -22,13 +22,8 @@ class SentDemo extends React.Component {
 
   textInput = (e) => {
     post('/sentences/', 'text=' + e.target.value)
-      .then(data => {
-        let sentences = data.sentences;
-        this.setState({ sentences });
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
+      .then(data => { this.setState({ sentences: data.sentences }); })
+      .catch(err => { console.log(err); });
   };
 
   render() {
