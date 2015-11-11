@@ -28,6 +28,7 @@ func sentences(w http.ResponseWriter, r *http.Request, tokenizer punkt.SentenceT
 	if text == "" {
 		// TODO
 		// send 400 error with json response
+		return
 	}
 
 	content := &Tokens{tokenizer.Tokenize(text)}

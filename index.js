@@ -4,49 +4,65 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 window.addEventListener('DOMContentLoaded', function() {
-  renderDemo();
-
-  let ta = document.getElementById('input');
-  ta.addEventListener('input', debounce(function() {
-    renderDemo(this.value);
-  }));
+  ReactDOM.render(
+    <SentDemo />,
+    document.getElementById('demo')
+  );
 });
 
 class SentDemo extends React.Component {
-  constructor(props) { super(props); };
+  state = {
+    sentences: ["I'm a sentence."]
+  };
+
+  constructor(props) {
+    super(props);
+    this.textInput = debounce(this.textInput);
+  };
+
+  textInput = (e) => {
+    post('/sentences/', 'text=' + e.target.value)
+      .then(data => {
+        let sentences = data.sentences;
+        this.setState({ sentences });
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
+
   render() {
+    let sentences = [];
+    for (let i = 0; i < this.state.sentences.length; i++) {
+      let sentence = this.state.sentences[i];
+      sentences.push(<Sentence key={i} text={sentence} />);
+    }
+
     return (
       <div>
-        <textarea id="input"></textarea>
-        <Sentence />
+        <textarea id="input" onChange={this.textInput}></textarea>
+        {sentences}
       </div>
     );
   };
 }
 
 class Sentence extends React.Component {
-  constructor(props) { super(props); }
+  constructor(props) { super(props); };
   render() {
-    return (<div>A sentence!</div>);
-  }
-}
-
-function renderDemo(text='') {
-  ReactDOM.render(
-    <SentDemo text={ text } />,
-    document.getElementById('demo')
-  );
+    return (<div className="sentence">{this.props.text}</div>);
+  };
 }
 
 function debounce(func, delay=500) {
   var timer;
-  return function() {
+  return function(e) {
     if (timer) clearTimeout(timer);
-    timer = setTimeout(func.bind(this), delay);
+    timer = setTimeout(func.bind(this, e), delay);
   }
 }
 
-function get(url) {
+function post(url, data) {
   return new Promise(function(resolve, reject) {
     console.log(`Grabbing: ${url}`);
     var ajax = new XMLHttpRequest();
@@ -56,11 +72,12 @@ function get(url) {
         reject(ajax);
         return;
       }
-      resolve(ajax);
+      resolve(JSON.parse(ajax.responseText));
     };
 
-    ajax.open('GET', url, true);
-    ajax.send();
+    ajax.open('POST', url, true);
+    ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    ajax.send(data);
   });
 }
 
