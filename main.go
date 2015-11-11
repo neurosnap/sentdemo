@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/neurosnap/sentences/data"
+	"github.com/neurosnap/sentences/english"
 	"github.com/neurosnap/sentences/punkt"
 )
 
@@ -46,7 +47,7 @@ func main() {
 	data, _ := data.Asset("data/english.json")
 	training, _ := punkt.LoadTraining(data)
 
-	tokenizer := punkt.NewSentenceTokenizer(training)
+	tokenizer := english.NewSentenceTokenizer(training)
 
 	http.HandleFunc("/", index)
 	http.HandleFunc("/sentences/", func(w http.ResponseWriter, r *http.Request) {
