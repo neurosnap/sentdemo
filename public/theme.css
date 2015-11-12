@@ -1,6 +1,6 @@
 .sentence {
   border-bottom: 1px solid black;
-  margin: 10px;
+  margin: 10px 0;
 }
 
 .sentence:first-child {
@@ -85,14 +85,22 @@ b, strong {
 }
 
 @media only screen and (max-width: 767px) {
+  h1, h2, h3 {
+    margin: 5px;
+  }
+
   .center {
-    width: 100%;
+    width: 95vw;
     padding: 0 7px;
   }
 
   .row .col-left, .row .col-right {
-    width: 100vw;
+    width: 95vw;
     float: none;
     margin-bottom: 10px;
+  }
+
+  #input {
+    height: 115px;
   }
 }
