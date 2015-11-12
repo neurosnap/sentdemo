@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"html/template"
+	"log"
 	"net/http"
 
 	"github.com/neurosnap/sentences/data"
@@ -14,10 +14,10 @@ type Tokens struct {
 	Sentences []string `json:"sentences"`
 }
 
-func index(w http.ResponseWriter, r *http.Request) {
+/*func index(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("index.html")
 	t.Execute(w, nil)
-}
+}*/
 
 func sentences(w http.ResponseWriter, r *http.Request, tokenizer punkt.SentenceTokenizer) {
 	r.ParseForm()
@@ -49,13 +49,11 @@ func main() {
 
 	tokenizer := english.NewSentenceTokenizer(training)
 
-	http.HandleFunc("/", index)
+	//http.HandleFunc("/", index)
 	http.HandleFunc("/sentences/", func(w http.ResponseWriter, r *http.Request) {
 		sentences(w, r, tokenizer)
 	})
 
-	fs := http.FileServer(http.Dir("public"))
-	http.Handle("/public/", http.StripPrefix("/public/", fs))
-
-	http.ListenAndServe(":3000", nil)
+	http.Handle("/", http.FileServer(FS(false)))
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }

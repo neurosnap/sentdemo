@@ -2,3 +2,5 @@ sentdemo
 *.swp
 public/js
 node_modules
+static.go
+env.sh
