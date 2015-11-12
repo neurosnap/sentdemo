@@ -16,6 +16,9 @@ deploy: static
 	export GOOS=linux
 	export GOARCH=amd64
 	go build
-	ssh $(SENTDEMO_USER)@$(SENTDEMO_SERVER) supervisorctl stop sentdemo
-	scp ./sentdemo $(SENTDEMO_USER)@$(SENTDEMO_SERVER):/srv/sites/sentdemo
-	ssh $(SENTDEMO_USER)@$(SENTDEMO_SERVER) supervisorctl start sentdemo
+
+	scp ./sentdemo $(SENTDEMO_USER)@$(SENTDEMO_SERVER):$(SENTDEMO_DIR)/sentdemo_new
+	scp ./deploy.sh $(SENTDEMO_USER)@$(SENTDEMO_SERVER):$(SENTDEMO_DIR)
+
+	ssh $(SENTDEMO_USER)@$(SENTDEMO_SERVER) chmod u+x $(SENTDEMO_DIR)/deploy.sh
+	ssh $(SENTDEMO_USER)@$(SENTDEMO_SERVER) SENTDEMO_DIR=$(SENTDEMO_DIR) $(SENTDEMO_DIR)/deploy.sh
