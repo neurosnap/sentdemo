@@ -6,10 +6,10 @@ import ReactDOM from 'react-dom';
 var placeholder = `Hey there!  How's it going?
 
 My initials are E.R.B. which is alright.
-Custom initials are neat, but I live in the U.S. I think
-that could make sentence tokenization difficult.  Oh well,
-I'll just call Sen. Bernie Sanders to help me out.
-`;
+Here's the U.S. at the beginning of the sentence and now I'll end the sentence with U.S.  This is great,
+I'll just call Sen. Bernie Sanders to help me get out of here.
+
+Or maybe Rep. Lindsey Graham would be better...`;
 
 var maxChars = 500;
 

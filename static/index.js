@@ -112,7 +112,7 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var placeholder = 'Hey there!  How\'s it going?\n\nMy initials are E.R.B. which is alright.\nCustom initials are neat, but I live in the U.S. I think\nthat could make sentence tokenization difficult.  Oh well,\nI\'ll just call Sen. Bernie Sanders to help me out.\n';
+var placeholder = 'Hey there!  How\'s it going?\n\nMy initials are E.R.B. which is alright.\nHere\'s the U.S. at the beginning of the sentence and now I\'ll end the sentence with U.S.  This is great,\nI\'ll just call Sen. Bernie Sanders to help me get out of here.\n\nOr maybe a Rep. Lindsey Graham would be better...';
 
 var maxChars = 500;
 
