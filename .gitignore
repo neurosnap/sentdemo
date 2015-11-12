@@ -1,6 +1,6 @@
 sentdemo
 *.swp
-static/js
+static/index.js
 node_modules
 static.go
 env.sh
