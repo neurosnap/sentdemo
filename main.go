@@ -10,6 +10,8 @@ import (
 	"github.com/neurosnap/sentences/punkt"
 )
 
+var COMMITHASH string
+
 type Tokens struct {
 	Sentences []string `json:"sentences"`
 }

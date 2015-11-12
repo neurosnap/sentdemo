@@ -4,3 +4,4 @@ static/index.js
 node_modules
 static.go
 env.sh
+index.html
