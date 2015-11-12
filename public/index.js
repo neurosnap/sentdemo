@@ -112,12 +112,25 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var placeholder = 'Hey there!  How\'s it going?\n\nMy initials are E.R.B. which is alright.\nCustom initials are neat, but I live in the U.S. I think\nthat could make sentence tokenization difficult.  Oh well,\nI\'ll just call Sen. Bernie Sanders to help me out.\n';
+
+var maxChars = 500;
+
 window.addEventListener('DOMContentLoaded', function () {
-  _reactDom2['default'].render(_react2['default'].createElement(SentDemo, null), document.getElementById('demo'));
+  _reactDom2['default'].render(_react2['default'].createElement(SentDemo, { text: placeholder }), document.getElementById('demo'));
 });
 
 var SentDemo = (function (_React$Component) {
   _inherits(SentDemo, _React$Component);
+
+  _createClass(SentDemo, null, [{
+    key: 'defaultProps',
+    value: {
+      maxChars: maxChars,
+      charsLeft: maxChars
+    },
+    enumerable: true
+  }]);
 
   function SentDemo(props) {
     var _this = this;
@@ -125,35 +138,87 @@ var SentDemo = (function (_React$Component) {
     _classCallCheck(this, SentDemo);
 
     _get(Object.getPrototypeOf(SentDemo.prototype), 'constructor', this).call(this, props);
+
     this.state = {
-      sentences: ["I'm a sentence."]
+      sentences: [],
+      start: true
     };
 
     this.textInput = function (e) {
-      post('/sentences/', 'text=' + e.target.value).then(function (data) {
-        _this.setState({ sentences: data.sentences });
-      })['catch'](function (err) {
-        console.log(err);
-      });
+      _this.processText(e.target.value);
+    };
+
+    this.clearInput = function (e) {
+      if (!_this.state.start) return;
+
+      e.target.value = '';
+      _this.setState({ start: false, sentences: [], charsLeft: maxChars });
     };
 
     this.textInput = debounce(this.textInput);
+    if (this.props.text) this.processText(this.props.text);
   }
 
   _createClass(SentDemo, [{
+    key: 'processText',
+    value: function processText(text) {
+      var _this2 = this;
+
+      if (!text.trim()) {
+        this.setState({ charsLeft: maxChars, sentences: [] });
+      }
+
+      post('/sentences/', 'text=' + text).then(function (data) {
+        var charsLeft = text.length;
+        var newLines = text.match(/(\r\n|\n|\r)/g);
+        if (newLines != null) charsLeft += newLines.length;
+
+        charsLeft = _this2.props.maxChars - charsLeft;
+
+        _this2.setState({
+          charsLeft: charsLeft,
+          sentences: data.sentences
+        });
+      })['catch'](function (err) {
+        console.log(err);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var sentences = [];
       for (var i = 0; i < this.state.sentences.length; i++) {
         var sentence = this.state.sentences[i];
+        if (!sentence.trim()) continue;
         sentences.push(_react2['default'].createElement(Sentence, { key: i, text: sentence }));
       }
 
+      var charsLeftClasses = 'chars-left';
+      if (this.state.charsLeft < 50) charsLeftClasses += ' red';
+
       return _react2['default'].createElement(
         'div',
-        null,
-        _react2['default'].createElement('textarea', { id: 'input', onChange: this.textInput }),
-        sentences
+        { className: 'row' },
+        _react2['default'].createElement(
+          'div',
+          { className: 'col-left' },
+          _react2['default'].createElement('textarea', { id: 'input',
+            maxLength: this.props.maxChars,
+            onClick: this.clearInput,
+            onChange: this.textInput,
+            defaultValue: this.props.text }),
+          _react2['default'].createElement(
+            'div',
+            { className: charsLeftClasses },
+            this.state.charsLeft,
+            ' characters remaining'
+          )
+        ),
+        _react2['default'].createElement(
+          'div',
+          { className: 'col-right' },
+          sentences
+        )
       );
     }
   }]);
@@ -185,7 +250,7 @@ var Sentence = (function (_React$Component2) {
 })(_react2['default'].Component);
 
 function debounce(func) {
-  var delay = arguments.length <= 1 || arguments[1] === undefined ? 500 : arguments[1];
+  var delay = arguments.length <= 1 || arguments[1] === undefined ? 1000 : arguments[1];
 
   var timer;
   return function (e) {

@@ -1,0 +1,98 @@
+.sentence {
+  border-bottom: 1px solid black;
+  margin: 10px;
+}
+
+.sentence:first-child {
+  margin-top: 0px;
+}
+
+#input {
+  display: block;
+  margin: 0;
+  width: 90%;
+  height: 210px;
+  font-family: sans-serif;
+  box-shadow: none;
+  border-radius: 0px;
+  padding: 10px;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+#input:focus {
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+  outline: none;
+}
+
+.chars-left {
+  margin-top: 10px;
+}
+
+.red {
+  color: tomato;
+}
+
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  height: 100vh;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: rgb(51, 51, 51);
+  margin: 0;
+}
+
+a {
+  background-color: transparent;
+}
+
+a:active, a:hover {
+  outline: 0;
+}
+
+b, strong {
+  font-weight: bold;
+}
+
+.row {
+  overflow: auto;
+  width: 100%;
+}
+
+.row .col-left {
+  float: left;
+  width: 50%;
+}
+
+.row .col-right {
+  float: right;
+  width: 50%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.center {
+  width: 75%;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .center {
+    width: 100%;
+    padding: 0 7px;
+  }
+
+  .row .col-left, .row .col-right {
+    width: 100vw;
+    float: none;
+    margin-bottom: 10px;
+  }
+}

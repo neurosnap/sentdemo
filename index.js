@@ -3,26 +3,70 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+var placeholder = `Hey there!  How's it going?
+
+My initials are E.R.B. which is alright.
+Custom initials are neat, but I live in the U.S. I think
+that could make sentence tokenization difficult.  Oh well,
+I'll just call Sen. Bernie Sanders to help me out.
+`;
+
+var maxChars = 500;
+
 window.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    <SentDemo />,
+    <SentDemo text={placeholder} />,
     document.getElementById('demo')
   );
 });
 
 class SentDemo extends React.Component {
   state = {
-    sentences: ["I'm a sentence."]
+    sentences: [],
+    start: true
+  };
+
+  static defaultProps = {
+    maxChars,
+    charsLeft: maxChars
   };
 
   constructor(props) {
     super(props);
+
     this.textInput = debounce(this.textInput);
+    if (this.props.text) this.processText(this.props.text);
   };
 
   textInput = (e) => {
-    post('/sentences/', 'text=' + e.target.value)
-      .then(data => { this.setState({ sentences: data.sentences }); })
+    this.processText(e.target.value);
+  };
+
+  clearInput = (e) => {
+    if (!this.state.start) return;
+
+    e.target.value = '';
+    this.setState({ start: false, sentences: [], charsLeft: maxChars });
+  };
+
+  processText(text) {
+    if (!text.trim()) {
+      this.setState({ charsLeft: maxChars, sentences: [] });
+    }
+
+    post('/sentences/', 'text=' + text)
+      .then(data => {
+        let charsLeft = text.length;
+        let newLines = text.match(/(\r\n|\n|\r)/g);
+        if (newLines != null) charsLeft += newLines.length;
+
+        charsLeft = this.props.maxChars - charsLeft;
+
+        this.setState({
+          charsLeft,
+          sentences: data.sentences
+        });
+      })
       .catch(err => { console.log(err); });
   };
 
@@ -30,13 +74,26 @@ class SentDemo extends React.Component {
     let sentences = [];
     for (let i = 0; i < this.state.sentences.length; i++) {
       let sentence = this.state.sentences[i];
+      if (!sentence.trim()) continue;
       sentences.push(<Sentence key={i} text={sentence} />);
     }
 
+    let charsLeftClasses = 'chars-left';
+    if (this.state.charsLeft < 50) charsLeftClasses += ' red';
+
     return (
-      <div>
-        <textarea id="input" onChange={this.textInput}></textarea>
-        {sentences}
+      <div className="row">
+        <div className="col-left">
+          <textarea id="input"
+            maxLength={this.props.maxChars}
+            onClick={this.clearInput}
+            onChange={this.textInput}
+            defaultValue={this.props.text}></textarea>
+          <div className={charsLeftClasses}>{this.state.charsLeft} characters remaining</div>
+        </div>
+        <div className="col-right">
+          {sentences}
+        </div>
       </div>
     );
   };
@@ -49,7 +106,7 @@ class Sentence extends React.Component {
   };
 }
 
-function debounce(func, delay=500) {
+function debounce(func, delay=1000) {
   var timer;
   return function(e) {
     if (timer) clearTimeout(timer);
