@@ -5,9 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/neurosnap/sentences/data"
+	"github.com/neurosnap/sentences"
 	"github.com/neurosnap/sentences/english"
-	"github.com/neurosnap/sentences/punkt"
 )
 
 var COMMITHASH string
@@ -16,12 +15,7 @@ type Tokens struct {
 	Sentences []string `json:"sentences"`
 }
 
-/*func index(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("index.html")
-	t.Execute(w, nil)
-}*/
-
-func sentences(w http.ResponseWriter, r *http.Request, tokenizer punkt.SentenceTokenizer) {
+func getSentences(w http.ResponseWriter, r *http.Request, tokenizer sentences.SentenceTokenizer) {
 	r.ParseForm()
 	text := r.FormValue("text")
 	if text == "" {
@@ -46,14 +40,13 @@ func sentences(w http.ResponseWriter, r *http.Request, tokenizer punkt.SentenceT
 }
 
 func main() {
-	data, _ := data.Asset("data/english.json")
-	training, _ := punkt.LoadTraining(data)
+	tokenizer, err := english.NewSentenceTokenizer(nil)
+	if err != nil {
+		panic(err)
+	}
 
-	tokenizer := english.NewSentenceTokenizer(training)
-
-	//http.HandleFunc("/", index)
 	http.HandleFunc("/sentences/", func(w http.ResponseWriter, r *http.Request) {
-		sentences(w, r, tokenizer)
+		getSentences(w, r, tokenizer)
 	})
 
 	http.Handle("/", http.FileServer(FS(false)))
