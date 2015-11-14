@@ -29,6 +29,7 @@ func getSentences(w http.ResponseWriter, r *http.Request, tokenizer sentences.Se
 	}
 
 	sents := tokenizer.Tokenize(text)
+
 	sentences := make([]int, 0, len(sents))
 	for _, s := range sents {
 		sentences = append(sentences, s.End)
