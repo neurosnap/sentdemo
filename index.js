@@ -22,7 +22,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
 class SentDemo extends React.Component {
   state = {
-    sentences: [],
+    positions: [],
+    text: '',
     start: true,
     loading: false
   };
@@ -47,12 +48,12 @@ class SentDemo extends React.Component {
     if (!this.state.start) return;
 
     e.target.value = '';
-    this.setState({ start: false, sentences: [], charsLeft: maxChars });
+    this.setState({ start: false, positions: [], text: '', charsLeft: maxChars });
   };
 
   processText(text) {
     if (!text.trim()) {
-      this.setState({ charsLeft: maxChars, sentences: [] });
+      this.setState({ charsLeft: maxChars, positions: [], text: '' });
     }
 
     if (!this.state.start) this.setState({ loading: true });
@@ -67,21 +68,37 @@ class SentDemo extends React.Component {
 
         this.setState({
           charsLeft,
-          sentences: data.sentences,
+          text,
+          positions: data.sentences,
           loading: false
         });
       })
       .catch(err => { console.log(err); });
   };
 
-  render() {
-    let sentences = [];
-    for (let i = 0; i < this.state.sentences.length; i++) {
-      let sentence = this.state.sentences[i];
-      if (!sentence.trim()) continue;
-      sentences.push(<Sentence key={i} text={sentence} />);
+  sentences(positions) {
+    let sents = [];
+    let lastPos = 0;
+    for (let i = 0; i < positions.length; i++) {
+      let sentPos = positions[i];
+      let sentence = this.state.text.slice(lastPos, sentPos);
+      lastPos = sentPos;
+      sentence = sentence.trim();
+
+      if (!sentence) continue;
+
+      sents.push(
+        <Sentence key={i}
+          text={sentence}
+          start={lastPos}
+          end={sentPos} />
+      );
     }
 
+    return sents;
+  }
+
+  render() {
     let charsLeftClasses = 'chars-left';
     if (this.state.charsLeft < 50) charsLeftClasses += ' red';
 
@@ -102,7 +119,7 @@ class SentDemo extends React.Component {
         </div>
         <div className="col-right">
           {loading}
-          {sentences}
+          {this.sentences(this.state.positions)}
         </div>
       </div>
     );
