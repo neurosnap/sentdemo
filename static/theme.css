@@ -7,6 +7,11 @@
   margin-top: 0px;
 }
 
+.loading {
+  width: 150px;
+  height: auto;
+}
+
 #input {
   display: block;
   margin: 0;

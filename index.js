@@ -23,7 +23,8 @@ window.addEventListener('DOMContentLoaded', function() {
 class SentDemo extends React.Component {
   state = {
     sentences: [],
-    start: true
+    start: true,
+    loading: false
   };
 
   static defaultProps = {
@@ -54,6 +55,8 @@ class SentDemo extends React.Component {
       this.setState({ charsLeft: maxChars, sentences: [] });
     }
 
+    if (!this.state.start) this.setState({ loading: true });
+
     post('/sentences/', 'text=' + text)
       .then(data => {
         let charsLeft = text.length;
@@ -64,7 +67,8 @@ class SentDemo extends React.Component {
 
         this.setState({
           charsLeft,
-          sentences: data.sentences
+          sentences: data.sentences,
+          loading: false
         });
       })
       .catch(err => { console.log(err); });
@@ -81,6 +85,11 @@ class SentDemo extends React.Component {
     let charsLeftClasses = 'chars-left';
     if (this.state.charsLeft < 50) charsLeftClasses += ' red';
 
+    let loading = '';
+    if (this.state.loading) {
+      loading = <img src="/static/zelda.gif" className="loading" />
+    }
+
     return (
       <div className="row">
         <div className="col-left">
@@ -92,6 +101,7 @@ class SentDemo extends React.Component {
           <div className={charsLeftClasses}>{this.state.charsLeft} characters remaining</div>
         </div>
         <div className="col-right">
+          {loading}
           {sentences}
         </div>
       </div>
