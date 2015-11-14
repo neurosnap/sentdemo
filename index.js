@@ -104,7 +104,7 @@ class SentDemo extends React.Component {
 
     let loading = '';
     if (this.state.loading) {
-      loading = <img src="/static/zelda.gif" className="loading" />
+      loading = <span>Loading ...</span>
     }
 
     return (
