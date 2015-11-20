@@ -129,7 +129,7 @@ class SentDemo extends React.Component {
 class Sentence extends React.Component {
   constructor(props) { super(props); };
   render() {
-    return (<div className="sentence">{this.props.text}</div>);
+    return (<div className="sentence border">{this.props.text}</div>);
   };
 }
 

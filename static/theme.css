@@ -1,4 +1,4 @@
-.sentence {
+.border {
   border-bottom: 1px solid black;
   margin: 10px 0;
 }
@@ -66,7 +66,8 @@ b, strong {
 }
 
 .row {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 100%;
 }
 
@@ -95,16 +96,16 @@ b, strong {
 
 @media only screen and (max-width: 767px) {
   h1, h2, h3, h4 {
-    margin: 5px;
+    margin: 5px 0;
   }
 
   .center {
-    width: 95vw;
+    width: 92vw;
     padding: 0 7px;
   }
 
   .row .col-left, .row .col-right {
-    width: 95vw;
+    width: 92vw;
     float: none;
     margin-bottom: 10px;
   }
