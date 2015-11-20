@@ -24,8 +24,7 @@ class SentDemo extends React.Component {
   state = {
     positions: [],
     text: '',
-    start: true,
-    loading: false
+    start: true
   };
 
   static defaultProps = {
@@ -56,8 +55,6 @@ class SentDemo extends React.Component {
       this.setState({ charsLeft: maxChars, positions: [], text: '' });
     }
 
-    if (!this.state.start) this.setState({ loading: true });
-
     post('/sentences/', 'text=' + text)
       .then(data => {
         let charsLeft = text.length;
@@ -69,8 +66,7 @@ class SentDemo extends React.Component {
         this.setState({
           charsLeft,
           text,
-          positions: data.sentences,
-          loading: false
+          positions: data.sentences
         });
       })
       .catch(err => { console.log(err); });
@@ -102,11 +98,6 @@ class SentDemo extends React.Component {
     let charsLeftClasses = 'chars-left';
     if (this.state.charsLeft < 50) charsLeftClasses += ' red';
 
-    let loading = '';
-    if (this.state.loading) {
-      loading = <span>Loading ...</span>
-    }
-
     return (
       <div className="row">
         <div className="col-left">
@@ -118,7 +109,6 @@ class SentDemo extends React.Component {
           <div className={charsLeftClasses}>{this.state.charsLeft} characters remaining</div>
         </div>
         <div className="col-right">
-          {loading}
           {this.sentences(this.state.positions)}
         </div>
       </div>
