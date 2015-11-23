@@ -15,9 +15,7 @@ build: static
 	go build
 
 deploy: static
-	export GOOS=linux
-	export GOARCH=amd64
-	go build -ldflags "-X main.COMMITHASH=$(COMMITHASH)"
+	GOOS=linux GOARCH=amd64 go build -ldflags "-X main.COMMITHASH=$(COMMITHASH)"
 
 	scp ./sentdemo $(SENTDEMO_USER)@$(SENTDEMO_SERVER):$(SENTDEMO_DIR)/sentdemo_new
 	scp ./deploy.sh $(SENTDEMO_USER)@$(SENTDEMO_SERVER):$(SENTDEMO_DIR)
