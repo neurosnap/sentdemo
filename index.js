@@ -3,13 +3,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var placeholder = `Hey there!  How's it going?
+var placeholder = `I am a sentence.  How's it going?
 
-My initials are E.R.B. which is alright.
-Here's the U.S. at the beginning of the sentence and now I'll end the sentence with U.S.  This is great,
-I'll just call Sen. Bernie Sanders to help me get out of here.
+Sentence tokenization is difficult when an abbreviation ends with a sentence,
+which is very common in the U.S.  My initials are E.R.B. which is a custom initialism.
 
-Or maybe Rep. Lindsey Graham would be better...`;
+The english language has loads of periods that have nothing to do with sentence
+punctuation.  In the U.S. there is currently a presidential debate where Sen. Bernie Sanders
+is a democract candidate.`;
 
 var maxChars = 500;
 
