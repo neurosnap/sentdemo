@@ -3,14 +3,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var placeholder = `I am a sentence.  How's it going?
+var placeholder = `I am a sentence!  How's it going?
+
+The english language has loads of periods that have nothing to do with sentence punctuation.
+
+Besides abbreviations like M.D. and initials containing periods, they can also end a sentence.
 
 Sentence tokenization is difficult when an abbreviation ends with a sentence,
-which is very common in the U.S.  My initials are E.R.B. which is a custom initialism.
-
-The english language has loads of periods that have nothing to do with sentence
-punctuation.  In the U.S. there is currently a presidential debate where Sen. Bernie Sanders
-is a democract candidate.`;
+which is very common in news articles in the U.S.  There are custom initials like E.R.B. which
+also happens to be the initals for my name.`;
 
 var maxChars = 500;
 
