@@ -57,5 +57,5 @@ func main() {
 	})
 
 	http.Handle("/", http.FileServer(FS(false)))
-	log.Fatal(http.ListenAndServe(":3000", nil))
+	log.Fatal(http.ListenAndServe(":3010", nil))
 }
