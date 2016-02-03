@@ -5,7 +5,7 @@ install:
 	npm install
 
 browserify:
-	browserify -t [ babelify --stage 0 ] index.js -o ./static/index.js
+	browserify -t [ babelify --presets [ es2015 ] ] index.js -o ./static/index.js
 
 static: browserify
 	sed 's/{{COMMITHASH}}/$(COMMITHASH)/g' ./_index.html > ./index.html
