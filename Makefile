@@ -7,6 +7,11 @@ install:
 browserify:
 	browserify -t [ babelify --presets [ es2015 ] ] index.js -o ./static/index.js
 
+watch:
+	./node_modules/.bin/watchify -t [ babelify --presets [ es2015 ] ] -p browserify-hmr index.js -o ./static/index.js &
+	./node_modules/.bin/http-server -c 1 -a localhost &
+	wait
+
 static: browserify
 	sed 's/{{COMMITHASH}}/$(COMMITHASH)/g' ./_index.html > ./index.html
 	esc -o static.go static index.html
