@@ -63,7 +63,7 @@ function main({ DOM, HTTP }) {
     });
 
   const action$ = Rx.Observable
-    .combineLatest(trackLength$, input$, clearInput$, (s1, s2) => {
+    .combineLatest(trackLength$, input$, (s1, s2) => {
       let remainClasses = '.chars-left';
       if (s1 < 50) remainClasses += ' .red';
 
