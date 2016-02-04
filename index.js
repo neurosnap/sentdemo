@@ -13,12 +13,12 @@ Besides abbreviations like M.D. and initials containing periods, they can also e
 
 Sentence tokenization is difficult when an abbreviation ends with a sentence,
 which is very common in news articles in the U.S.  There are custom initials like E.R.B. which
-also happens to be the initals for my name.`;
+also happens to be the initials for my name.`;
 
 const maxChars = 500;
 
-function main(sources) {
-  const trackLength$ = sources.DOM.select('#input').events('input')
+function main({ DOM, HTTP }) {
+  const trackLength$ = DOM.select('#input').events('input')
     .map(e => e.target.value)
     .startWith(placeholder)
     .map(text => {
@@ -29,7 +29,7 @@ function main(sources) {
       return maxChars - charLen;
     });
 
-  const getSentences$ = sources.DOM.select('#input').events('input')
+  const getSentences$ = DOM.select('#input').events('input')
     .debounce(1000)
     .map(e => e.target.value)
     .startWith(placeholder)
@@ -41,8 +41,7 @@ function main(sources) {
       };
     });
 
-  const input$ = sources.HTTP
-    .mergeAll()
+  const input$ = HTTP.mergeAll()
     .map(res => {
       const positions = res.body.sentences;
       const text = res.request.query.text;
@@ -64,14 +63,14 @@ function main(sources) {
     });
 
   const action$ = Rx.Observable
-    .combineLatest(trackLength$, input$, (s1, s2) => {
+    .combineLatest(trackLength$, input$, clearInput$, (s1, s2) => {
       let remainClasses = '.chars-left';
       if (s1 < 50) remainClasses += ' .red';
 
       return {
+        ...s2,
         remaining: s1,
-        remainClasses,
-        ...s2
+        remainClasses
       };
     });
 
