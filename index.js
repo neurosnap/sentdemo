@@ -33,6 +33,7 @@ function main({ DOM, HTTP }) {
     .debounce(1000)
     .map(e => e.target.value)
     .startWith(placeholder)
+    .filter(text => text.trim())
     .map(text => {
       return {
         method: 'POST',
