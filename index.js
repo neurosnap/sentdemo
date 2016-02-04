@@ -18,24 +18,26 @@ also happens to be the initals for my name.`;
 const maxChars = 500;
 
 function main(sources) {
+  //const trackLength$ = sources.DOM.select('#input').events('input')
+  //  .map(e => e.target.value.length);
+
   const getSentences$ = sources.DOM.select('#input').events('input')
     .debounce(1000)
     .map(e => e.target.value)
     .startWith(placeholder)
     .map(text => {
       return {
-        method: 'GET',
-        url: '/sentences/?text=' + text,
-        text
+        method: 'POST',
+        url: '/sentences/',
+        query: { text }
       };
     });
 
   const input$ = sources.HTTP
     .mergeAll()
     .map(res => {
-      console.log(res);
       const positions = res.body.sentences;
-      const text = res.request.text;
+      const text = res.request.query.text;
 
       let sentences = [];
       let lastPos = 0;
@@ -56,7 +58,8 @@ function main(sources) {
   const vtree$ = input$.map(data =>
     div('.row', [
       div('.col-left', [
-        textarea('#input', data.text)
+        textarea('#input', data.text),
+        div('', ` characters remaining`)
       ]),
       div('.col-right', data.sentences)
     ])
@@ -74,3 +77,4 @@ const drivers = {
 };
 
 Cycle.run(main, drivers);
+
