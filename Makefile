@@ -5,7 +5,7 @@ install:
 	npm install
 
 browserify:
-	browserify -t [ babelify --presets [ es2015 ] ] index.js -o ./static/index.js
+	browserify -t [ babelify --presets [ es2015 ] --plugins [ transform-object-assign syntax-object-rest-spread babel-plugin-transform-object-rest-spread ] ] index.js -o ./static/index.js
 
 watch:
 	./node_modules/.bin/watchify -t [ babelify --presets [ es2015 ] ] -p browserify-hmr index.js -o ./static/index.js &

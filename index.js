@@ -18,8 +18,16 @@ also happens to be the initals for my name.`;
 const maxChars = 500;
 
 function main(sources) {
-  //const trackLength$ = sources.DOM.select('#input').events('input')
-  //  .map(e => e.target.value.length);
+  const trackLength$ = sources.DOM.select('#input').events('input')
+    .map(e => e.target.value)
+    .startWith(placeholder)
+    .map(text => {
+      let charLen = text.length;
+      let newLines = text.match(/(\r\n|\n|\r)/g);
+      if (newLines != null) charLen += newLines.length;
+
+      return maxChars - charLen;
+    });
 
   const getSentences$ = sources.DOM.select('#input').events('input')
     .debounce(1000)
@@ -55,11 +63,23 @@ function main(sources) {
       return { text, sentences };
     });
 
-  const vtree$ = input$.map(data =>
+  const action$ = Rx.Observable
+    .combineLatest(trackLength$, input$, (s1, s2) => {
+      let remainClasses = '.chars-left';
+      if (s1 < 50) remainClasses += ' .red';
+
+      return {
+        remaining: s1,
+        remainClasses,
+        ...s2
+      };
+    });
+
+  const vtree$ = action$.map(data =>
     div('.row', [
       div('.col-left', [
-        textarea('#input', data.text),
-        div('', ` characters remaining`)
+        textarea('#input', { maxLength: maxChars }, data.text),
+        div(data.remainClasses, `${data.remaining} characters remaining`)
       ]),
       div('.col-right', data.sentences)
     ])
