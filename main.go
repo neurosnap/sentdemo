@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/neurosnap/sentences"
-	"github.com/neurosnap/sentences/english"
+	"gopkg.in/neurosnap/sentences.v1"
+	"gopkg.in/neurosnap/sentences.v1/english"
 )
 
 var COMMITHASH string

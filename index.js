@@ -22,7 +22,16 @@ window.addEventListener('DOMContentLoaded', function() {
   );
 });
 
+const Sentence = ({ text }) => (<div className="sentence border">{text}</div>);
+
 class SentDemo extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.textInput = debounce(this.textInput);
+    if (this.props.text) this.processText(this.props.text);
+  };
+
   state = {
     positions: [],
     text: '',
@@ -32,13 +41,6 @@ class SentDemo extends React.Component {
   static defaultProps = {
     maxChars,
     charsLeft: maxChars
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.textInput = debounce(this.textInput);
-    if (this.props.text) this.processText(this.props.text);
   };
 
   textInput = (e) => {
@@ -57,7 +59,7 @@ class SentDemo extends React.Component {
       this.setState({ charsLeft: maxChars, positions: [], text: '' });
     }
 
-    post('/sentences/', 'text=' + text)
+    post('/sentences/', 'text=' + encodeURIComponent(text))
       .then(data => {
         let charsLeft = text.length;
         let newLines = text.match(/(\r\n|\n|\r)/g);
@@ -85,12 +87,7 @@ class SentDemo extends React.Component {
 
       if (!sentence) continue;
 
-      sents.push(
-        <Sentence key={i}
-          text={sentence}
-          start={lastPos}
-          end={sentPos} />
-      );
+      sents.push(<Sentence key={i} text={sentence} />);
     }
 
     return sents;
@@ -118,19 +115,13 @@ class SentDemo extends React.Component {
   };
 }
 
-class Sentence extends React.Component {
-  constructor(props) { super(props); };
-  render() {
-    return (<div className="sentence border">{this.props.text}</div>);
-  };
-}
-
 function debounce(func, delay=1000) {
   var timer;
   return function(e) {
+    e.persist();
     if (timer) clearTimeout(timer);
-    timer = setTimeout(func.bind(this, e), delay);
-  }
+    timer = setTimeout(() => { func.call(this, e); }, delay);
+  };
 }
 
 function post(url, data) {
