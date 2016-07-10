@@ -33,7 +33,7 @@ class SentDemo extends React.Component {
   };
 
   state = {
-    positions: [],
+    sentences: [],
     text: '',
     start: true
   };
@@ -70,32 +70,24 @@ class SentDemo extends React.Component {
         this.setState({
           charsLeft,
           text,
-          positions: data.sentences
+          sentences: data.sentences
         });
       })
       .catch(err => { console.log(err); });
   };
 
-  sentences(positions) {
-    let sents = [];
-    let lastPos = 0;
-    for (let i = 0; i < positions.length; i++) {
-      let sentPos = positions[i];
-      let sentence = this.state.text.slice(lastPos, sentPos);
-      lastPos = sentPos;
-      sentence = sentence.trim();
-
-      if (!sentence) continue;
-
-      sents.push(<Sentence key={i} text={sentence} />);
-    }
-
-    return sents;
-  }
-
   render() {
     let charsLeftClasses = 'chars-left';
     if (this.state.charsLeft < 50) charsLeftClasses += ' red';
+
+    const sentences = [];
+    for (let i = 0; i < this.state.sentences.length; i++) {
+      const pos = this.state.sentences[i];
+      const sentence = pos.trim();
+      if (!sentence) continue;
+
+      sentences.push(<Sentence key={i} text={sentence} />);
+    }
 
     return (
       <div className="row">
@@ -108,7 +100,7 @@ class SentDemo extends React.Component {
           <div className={charsLeftClasses}>{this.state.charsLeft} characters remaining</div>
         </div>
         <div className="col-right">
-          {this.sentences(this.state.positions)}
+          {sentences}
         </div>
       </div>
     );

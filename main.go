@@ -12,7 +12,7 @@ import (
 var COMMITHASH string
 
 type Tokens struct {
-	Sentences []int `json:"sentences"`
+	Sentences []string `json:"sentences"`
 }
 
 func getSentences(w http.ResponseWriter, r *http.Request, tokenizer sentences.SentenceTokenizer) {
@@ -30,9 +30,9 @@ func getSentences(w http.ResponseWriter, r *http.Request, tokenizer sentences.Se
 
 	sents := tokenizer.Tokenize(text)
 
-	sentences := make([]int, 0, len(sents))
+	sentences := make([]string, 0, len(sents))
 	for _, s := range sents {
-		sentences = append(sentences, s.End)
+		sentences = append(sentences, s.Text)
 	}
 
 	content := &Tokens{sentences}
