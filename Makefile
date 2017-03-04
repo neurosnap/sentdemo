@@ -1,6 +1,7 @@
 COMMITHASH=$(shell git rev-parse --short HEAD)
 
 install:
+	go get github.com/mjibson/esc
 	go get ./...
 	npm install
 
