@@ -6,22 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
-    <link href="./theme.css" type="text/css" rel="stylesheet">
+    <link href="./theme.css" type="text/css" rel="stylesheet" />
 
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      (function(i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function() {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "//www.google-analytics.com/analytics.js",
+        "ga"
+      );
 
-      ga('create', 'UA-70045213-1', 'auto');
-      ga('send', 'pageview');
+      ga("create", "UA-70045213-1", "auto");
+      ga("send", "pageview");
     </script>
   </head>
   <body>
     <main class="center">
-      <h1><a href="http://github.com/neurosnap/sentences" target="_blank">Sentences</a></h1>
-      <h3>Converts a blob of text into a list of sentences.  Go ahead and start typing.</h3>
+      <h1>
+        <a href="http://github.com/neurosnap/sentences" target="_blank"
+          >Sentences</a
+        >
+      </h1>
+      <h3>
+        Converts a blob of text into a list of sentences. Go ahead and start
+        typing.
+      </h3>
 
       <div id="demo"></div>
 
@@ -33,8 +55,14 @@
           </div>
 
           <div class="col-right">
-            <a href="https://s3-us-west-2.amazonaws.com/sentence-binaries/sentences_linux-386.tar.gz">Linux 386</a>
-            <a href="https://s3-us-west-2.amazonaws.com/sentence-binaries/sentences_linux-amd64.tar.gz">Linux AMD64</a>
+            <a
+              href="https://storage.cloud.google.com/go-sentences/sentences_linux-386.tar.gz"
+              >Linux 386</a
+            >
+            <a
+              href="https://storage.cloud.google.com/go-sentences/sentences_linux-amd64.tar.gz"
+              >Linux AMD64</a
+            >
           </div>
         </div>
 
@@ -44,8 +72,14 @@
           </div>
 
           <div class="col-right">
-            <a href="https://s3-us-west-2.amazonaws.com/sentence-binaries/sentences_darwin-386.tar.gz">Darwin 386</a>
-            <a href="https://s3-us-west-2.amazonaws.com/sentence-binaries/sentences_darwin-amd64.tar.gz">Darwin AMD64</a>
+            <a
+              href="https://storage.cloud.google.com/go-sentences/sentences_darwin-386.tar.gz"
+              >Darwin 386</a
+            >
+            <a
+              href="https://storage.cloud.google.com/go-sentences/sentences_darwin-amd64.tar.gz"
+              >Darwin AMD64</a
+            >
           </div>
         </div>
 
@@ -55,8 +89,14 @@
           </div>
 
           <div class="col-right">
-            <a href="https://s3-us-west-2.amazonaws.com/sentence-binaries/sentences_windows-386.tar.gz">Windows 386</a>
-            <a href="https://s3-us-west-2.amazonaws.com/sentence-binaries/sentences_windows-amd64.tar.gz">Windows AMD64</a>
+            <a
+              href="https://storage.cloud.google.com/go-sentences/sentences_windows-386.tar.gz"
+              >Windows 386</a
+            >
+            <a
+              href="https://storage.cloud.google.com/go-sentences/sentences_windows-amd64.tar.gz"
+              >Windows AMD64</a
+            >
           </div>
         </div>
       </div>
@@ -64,7 +104,11 @@
 
     <footer class="center text-center">
       <a href="http://erock.io" target="_blank">Eric Bower</a>
-      <a href="http://github.com/neurosnap/sentdemo/tree/{{COMMITHASH}}" target="_blank">{{COMMITHASH}}</a>
+      <a
+        href="http://github.com/neurosnap/sentdemo/tree/{{ COMMITHASH }}"
+        target="_blank"
+        >{{ COMMITHASH }}</a
+      >
     </footer>
 
     <script src="./index.js"></script>
