@@ -56,6 +56,5 @@ func main() {
 		getSentences(w, r, tokenizer)
 	})
 
-	http.Handle("/", http.FileServer(FS(false)))
-	log.Fatal(http.ListenAndServe(":3010", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
