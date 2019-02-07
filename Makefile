@@ -14,4 +14,4 @@ build: static
 	go build
 
 deploy: static
-	GOOS=linux GOARCH=amd64 go build -ldflags "-X main.COMMITHASH=$(COMMITHASH)"
+	gcloud app deploy app.yml

@@ -3,12 +3,6 @@ Sentdemo
 
 http://github.com/neurosnap/sentences
 
-## Environment variables for deployment
-
-* SENTDEMO\_USER
-* SENTDEMO\_SERVER
-* SENTDEMO\_DIR
-
 ## Install
 
 ```bash
@@ -27,3 +21,12 @@ Login to gcloud
 
 Run the gcloud app deploy on the project for Sharer
 `gcloud app deploy app.yaml`
+
+## Dev
+
+```bash
+make build
+./sentdemo
+```
+
+Open browser at localhost:8080
