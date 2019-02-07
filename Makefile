@@ -1,7 +1,6 @@
 COMMITHASH=$(shell git rev-parse --short HEAD)
 
 install:
-	go get github.com/mjibson/esc
 	go get ./...
 	yarn
 
@@ -10,7 +9,6 @@ browserify:
 
 static: browserify
 	sed 's/{{COMMITHASH}}/$(COMMITHASH)/g' ./_index.html > ./index.html
-	esc -o static.go static index.html
 
 build: static
 	go build

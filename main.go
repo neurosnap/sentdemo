@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
+	"fmt"
 
 	"gopkg.in/neurosnap/sentences.v1"
 	"gopkg.in/neurosnap/sentences.v1/english"
@@ -52,9 +54,16 @@ func main() {
 		panic(err)
 	}
 
-	http.HandleFunc("/sentences/", func(w http.ResponseWriter, r *http.Request) {
+	http.Handle("/", http.FileServer(http.Dir("./static")))
+	http.HandleFunc("/sentences", func(w http.ResponseWriter, r *http.Request) {
 		getSentences(w, r, tokenizer)
 	})
 
-	log.Fatal(http.ListenAndServe(":80", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
