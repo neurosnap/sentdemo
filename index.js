@@ -59,7 +59,7 @@ class SentDemo extends React.Component {
       this.setState({ charsLeft: maxChars, positions: [], text: '' });
     }
 
-    post('/sentences/', 'text=' + encodeURIComponent(text))
+    post('/sentences', 'text=' + encodeURIComponent(text))
       .then(data => {
         let charsLeft = text.length;
         let newLines = text.match(/(\r\n|\n|\r)/g);
