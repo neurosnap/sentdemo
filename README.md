@@ -22,6 +22,9 @@ Login to gcloud
 Run the gcloud app deploy on the project for Sharer
 `gcloud app deploy app.yaml`
 
+Set environment variable to google project id:
+`PROJECT_ID=xxx`
+
 ## Dev
 
 ```bash

@@ -7,3 +7,4 @@ env.sh
 prod.sh
 index.html
 static/index.html
+.envrc

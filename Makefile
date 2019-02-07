@@ -14,4 +14,4 @@ build: static
 	go build
 
 deploy: static
-	gcloud app deploy app.yml
+	gcloud --project ${PROJECT_ID} app deploy app.yml
