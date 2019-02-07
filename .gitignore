@@ -6,3 +6,4 @@ static.go
 env.sh
 prod.sh
 index.html
+static/index.html
