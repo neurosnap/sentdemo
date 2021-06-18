@@ -2,7 +2,8 @@
   "name": "sentdemo",
   "version": "0.0.1",
   "description": "Golang web application to demo sentence tokenizer",
-  "main": "gulpfile.js",
+  "private": true,
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

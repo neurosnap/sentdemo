@@ -2,13 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"fmt"
 
-	"gopkg.in/neurosnap/sentences.v1"
-	"gopkg.in/neurosnap/sentences.v1/english"
+	"github.com/neurosnap/sentences"
+	"github.com/neurosnap/sentences/english"
 )
 
 var COMMITHASH string
