@@ -32,12 +32,12 @@ func getSentences(w http.ResponseWriter, r *http.Request, tokenizer sentences.Se
 
 	sents := tokenizer.Tokenize(text)
 
-	sentences := make([]string, 0, len(sents))
+	curSentences := make([]string, 0, len(sents))
 	for _, s := range sents {
-		sentences = append(sentences, s.Text)
+		curSentences = append(curSentences, s.Text)
 	}
 
-	content := &Tokens{sentences}
+	content := &Tokens{curSentences}
 	resp, err := json.Marshal(content)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
